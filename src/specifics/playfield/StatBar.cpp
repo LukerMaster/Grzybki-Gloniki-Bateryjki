@@ -4,6 +4,9 @@ StatBar::StatBar(sf::Font& font_)
 	:max_health(1),
 	max_food(1),
 	max_energy(1),
+	anim_health(1),
+	anim_food(1),
+	anim_energy(1),
 	anim_age(0),
 	age(100)
 {
