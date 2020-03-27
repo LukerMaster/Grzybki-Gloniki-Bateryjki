@@ -80,15 +80,15 @@ void Button::Update(float dt, sf::Vector2i mouse_pos)
 			clickSound.play();
 			_clicked = true;
 		}
-		hitBox.setFillColor(_GetShiftedColor(hitBox.getFillColor(), hlColor, 9 * dt * 0.0003f));
-		label.setFillColor(_GetShiftedColor(label.getFillColor(), hlTextColor, 4 * dt * 0.0003f));
+		hitBox.setFillColor(_GetShiftedColor(hitBox.getFillColor(), hlColor, 9 * dt * 0.3f));
+		label.setFillColor(_GetShiftedColor(label.getFillColor(), hlTextColor, 4 * dt * 0.3f));
 		
 		_prevHovered = true;
 	}
 	else
 	{
-		hitBox.setFillColor(_GetShiftedColor(hitBox.getFillColor(), baseColor, 3 * dt * 0.0003f));
-		label.setFillColor(_GetShiftedColor(label.getFillColor(), baseTextColor, 6 * dt * 0.0003f));
+		hitBox.setFillColor(_GetShiftedColor(hitBox.getFillColor(), baseColor, 3 * dt * 0.3f));
+		label.setFillColor(_GetShiftedColor(label.getFillColor(), baseTextColor, 6 * dt * 0.3f));
 		_prevHovered = false;
 	}
 	_IsPointInRect(mouse_pos, hitBox) ? _prevHovered = true : _prevHovered = false;

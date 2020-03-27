@@ -48,7 +48,25 @@
     <ClCompile Include="src\specifics\playfield\GermClasses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\specifics\playfield\Food.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\specifics\playfield\Playfield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\specifics\playfield\AIController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\specifics\playfield\EmptySpace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\specifics\playfield\EventMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\specifics\playfield\animator\Animator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\specifics\playfield\StatBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,7 +101,34 @@
     <ClInclude Include="src\specifics\playfield\GermClasses.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\specifics\playfield\Food.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\Playfield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\AIController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\specifics\playfield\EmptySpace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\EventMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\animator\Animator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\animator\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\animator\PopUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\animator\DeathAnim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\specifics\playfield\StatBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

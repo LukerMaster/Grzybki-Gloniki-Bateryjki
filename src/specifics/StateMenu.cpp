@@ -129,7 +129,7 @@ void StateMenu::Step(float dt)
 	}
 	if (buttons.find("lessAlgae")->second.CheckAndUnclick())
 	{
-		if (vars.num_of_algae > 1)
+		if (vars.num_of_algae > 0)
 			vars.num_of_algae--;
 	}
 	if (buttons.find("moreBacteria")->second.CheckAndUnclick())
@@ -139,7 +139,7 @@ void StateMenu::Step(float dt)
 	}
 	if (buttons.find("lessBacteria")->second.CheckAndUnclick())
 	{
-		if (vars.num_of_bacteria > 1)
+		if (vars.num_of_bacteria > 0)
 			vars.num_of_bacteria--;
 	}
 	if (buttons.find("moreShrooms")->second.CheckAndUnclick())
@@ -149,7 +149,7 @@ void StateMenu::Step(float dt)
 	}
 	if (buttons.find("lessShrooms")->second.CheckAndUnclick())
 	{
-		if (vars.num_of_shrooms > 1)
+		if (vars.num_of_shrooms > 0)
 			vars.num_of_shrooms--;
 	}
 	algae_amount.setString(std::to_string(vars.num_of_algae));
@@ -268,5 +268,5 @@ void StateMenu::StepJumpAnimation(float dt)
 		shrooms_jumping[i].setScale(1, 0.8 + 0.2*sin(3.14 * ((jump_animation_frame + (i * 20)) % 100) / 100));
 	}
 
-	jump_animation_frame+= dt * 0.0002f;
+	jump_animation_frame+= dt * 0.2f;
 }

@@ -1,43 +1,36 @@
 #include "GermClasses.h"
 
 // ALGAE
-Algae::Algae(sf::Vector2i pos_, sf::Texture& texture_, sf::IntRect text_rect_, int max_health_, int max_food_, int max_age_)
-	:Germ(pos_, texture_, text_rect_, max_health_, max_food_, max_age_)
+Algae::Algae(sf::Vector2i start_pos_, sf::Vector2i end_pos_, sf::IntRect text_rect_, float max_age_, float max_health_, float max_food_, float curr_health_, float curr_food_)
+	:Germ(start_pos_, end_pos_, eObjType::Algae, text_rect_, max_age_, max_health_, max_food_, curr_health_, curr_food_)
 {
 }
 
-void Algae::DoAI(float dt, std::vector<std::vector<Object>> objects)
+void Algae::Step(float dt)
 {
-}
-
-void Algae::Draw(sf::RenderWindow& window)
-{
+	UpdateStats(dt);
 }
 
 // BACTERIA
-Bacteria::Bacteria(sf::Vector2i pos_, sf::Texture& texture_, sf::IntRect text_rect_, int max_health_, int max_food_, int max_age_)
-	:Germ(pos_, texture_, text_rect_, max_health_, max_food_, max_age_)
+Bacteria::Bacteria(sf::Vector2i start_pos_, sf::Vector2i end_pos_, sf::IntRect text_rect_, float max_health_, float max_food_, float max_age_, float curr_health_, float curr_food_)
+	:Germ(start_pos_, end_pos_, eObjType::Bacteria, text_rect_, max_health_, max_food_, max_age_, curr_health_, curr_food_)
 {
+
 }
 
-void Bacteria::DoAI(float dt, std::vector<std::vector<Object>> objects)
+void Bacteria::Step(float dt)
 {
+	UpdateStats(dt);
 }
 
-void Bacteria::Draw(sf::RenderWindow& window)
-{
-}
 
 // SHROOM
-Shroom::Shroom(sf::Vector2i pos_, sf::Texture& texture_, sf::IntRect text_rect_, int max_health_, int max_food_, int max_age_)
-	:Germ(pos_, texture_, text_rect_, max_health_, max_food_, max_age_)
+Shroom::Shroom(sf::Vector2i start_pos_, sf::Vector2i end_pos_, sf::IntRect text_rect_, float max_age_, float max_health_, float max_food_, float curr_health_, float curr_food_)
+	:Germ(start_pos_, end_pos_, eObjType::Shroom , text_rect_, max_age_, max_health_, max_food_, curr_health_, curr_food_)
 {
 }
 
-void Shroom::DoAI(float dt, std::vector<std::vector<Object>> objects)
+void Shroom::Step(float dt)
 {
-}
-
-void Shroom::Draw(sf::RenderWindow& window)
-{
+	UpdateStats(dt);
 }

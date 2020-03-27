@@ -4,8 +4,9 @@ class EmptySpace :
 	public Object
 {
 public:
-	EmptySpace(sf::Vector2i pos_, sf::Texture& texture_, sf::IntRect text_rect_);
-	virtual void DoAI(float dt, std::vector<std::vector<Object>> objects);
-	virtual void Draw(sf::RenderWindow& window);
+	EmptySpace()
+		: Object(eObjType::EmptySpace, { 0,0 }, { 0, 0 }) {};
+	// These 0's mean nothing as this object is used just to fill the playfield with something.
+	void Step(float dt) { };
 };
 

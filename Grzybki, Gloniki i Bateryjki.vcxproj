@@ -138,10 +138,16 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\specifics\playfield\AIController.cpp" />
+    <ClCompile Include="src\specifics\playfield\animator\Animator.cpp" />
     <ClCompile Include="src\specifics\playfield\EmptySpace.cpp" />
+    <ClCompile Include="src\specifics\playfield\EventMgr.cpp" />
+    <ClCompile Include="src\specifics\playfield\Food.cpp" />
     <ClCompile Include="src\specifics\playfield\Germ.cpp" />
     <ClCompile Include="src\specifics\playfield\GermClasses.cpp" />
     <ClCompile Include="src\specifics\playfield\Object.cpp" />
+    <ClCompile Include="src\specifics\playfield\Playfield.cpp" />
+    <ClCompile Include="src\specifics\playfield\StatBar.cpp" />
     <ClCompile Include="src\specifics\State.cpp" />
     <ClCompile Include="src\specifics\StateMenu.cpp" />
     <ClCompile Include="src\specifics\StatePlayfield.cpp" />
@@ -151,10 +157,19 @@
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\specifics\playfield\AIController.h" />
+    <ClInclude Include="src\specifics\playfield\animator\Animation.h" />
+    <ClInclude Include="src\specifics\playfield\animator\Animator.h" />
+    <ClInclude Include="src\specifics\playfield\animator\DeathAnim.h" />
+    <ClInclude Include="src\specifics\playfield\animator\PopUp.h" />
     <ClInclude Include="src\specifics\playfield\EmptySpace.h" />
+    <ClInclude Include="src\specifics\playfield\EventMgr.h" />
+    <ClInclude Include="src\specifics\playfield\Food.h" />
     <ClInclude Include="src\specifics\playfield\Germ.h" />
     <ClInclude Include="src\specifics\playfield\GermClasses.h" />
     <ClInclude Include="src\specifics\playfield\Object.h" />
+    <ClInclude Include="src\specifics\playfield\Playfield.h" />
+    <ClInclude Include="src\specifics\playfield\StatBar.h" />
     <ClInclude Include="src\specifics\State.h" />
     <ClInclude Include="src\specifics\StateMenu.h" />
     <ClInclude Include="src\specifics\StatePlayfield.h" />

@@ -5,7 +5,7 @@
 Application::Application(unsigned int window_height_, unsigned int window_width_, float framerate_, bool fullscreen_)
 	:window(sf::VideoMode(window_height_, window_width_),
 		"Grzybki, Gloniki i Bateryjki!",
-		sf::Style::Titlebar | sf::Style::Close | (fullscreen_ & sf::Style::Fullscreen)),
+		sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize | (fullscreen_ & sf::Style::Fullscreen)),
 	window_height(window_height_),
 	window_width(window_width_),
 	vars()
@@ -19,9 +19,11 @@ Application::Application(unsigned int window_height_, unsigned int window_width_
 	vars.current_state = eState::menu;
 	vars.next_state = eState::menu;
 
+	vars.playfield_size = 12;
+
 	vars.assets.font.loadFromFile("assets/gooddogp.mlg");
 	vars.assets.btn_click.loadFromFile("assets/mnst.mlg");
-	vars.assets.btn_hover.loadFromFile("assets/mnst.mlg");
+	vars.assets.btn_hover.loadFromFile("assets/mnsl.mlg");
 	vars.assets.microbe_tex.loadFromFile("assets/mcb.mlg");
 
 }
@@ -30,7 +32,7 @@ void Application::Run()
 {
 	sf::Event events;
 
-	float dtDesired = (1.0f / vars.framerate) * 1000000.0f; // In microseconds. FOR (redundant) PRECISION!
+	float dtDesired = (1.0f / vars.framerate) * 1000.0f; // In milliseconds.
 	float dt = 0;
 
 	sf::Clock dtClock;
@@ -41,11 +43,11 @@ void Application::Run()
 	while (vars.is_running)
 	{
 		// Timing
-		dt = dtClock.getElapsedTime().asMicroseconds();
+		dt = dtClock.getElapsedTime().asMilliseconds();
 		if (dt < dtDesired)
 		{
-			sf::sleep(sf::microseconds(dtDesired) - sf::microseconds(dt));
-			dt = dtClock.getElapsedTime().asMicroseconds();
+			sf::sleep(sf::milliseconds(dtDesired) - sf::milliseconds(dt));
+			dt = dtClock.getElapsedTime().asMilliseconds();
 		}
 		else if (dt > dtDesired * 5)
 			dt = dtDesired * 5;

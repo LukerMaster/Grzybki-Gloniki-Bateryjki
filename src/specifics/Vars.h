@@ -14,7 +14,10 @@ struct Assets
 	sf::Texture menu_tex;
 	sf::Texture playfield_tex;
 	sf::Texture bubble_tex;
+	sf::Texture food_tex;
+	sf::Texture death_icons;
 
+	sf::Texture stat_bar;
 
 	sf::Font font;
 	sf::SoundBuffer btn_click;
