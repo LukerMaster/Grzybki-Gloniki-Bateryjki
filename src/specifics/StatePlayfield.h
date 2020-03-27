@@ -33,7 +33,6 @@ class StatePlayfield : public State
 	StatBar stat_bar;
 
 	float lerp(float a, float b, float percent);
-
 	template <typename T>
 	sf::Vector2f GetPositionByGrid(sf::Vector2<T> grid_pos);
 	template <typename T>

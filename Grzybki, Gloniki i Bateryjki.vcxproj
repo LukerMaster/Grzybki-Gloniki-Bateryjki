@@ -83,6 +83,10 @@
       <SubSystem>Console</SubSystem>
       <AdditionalOptions>"extern\lib\*lib" %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)extern\bin\*.*" "$(SolutionDir)\x64\Release"
+; copy "$(SolutionDir)assets\*.*" "$(SolutionDir)\x64\Release\assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -97,6 +101,10 @@
       <SubSystem>Console</SubSystem>
       <AdditionalOptions>"extern\lib\*lib" %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)extern\bin\*.*" "$(SolutionDir)\x64\Release"
+; copy "$(SolutionDir)assets\*.*" "$(SolutionDir)\x64\Release\assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -115,6 +123,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>"extern\lib\*lib" %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)extern\bin\*.*" "$(SolutionDir)\x64\Release"
+; copy "$(SolutionDir)assets\*.*" "$(SolutionDir)\x64\Release\assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -133,6 +145,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>"extern\lib\*lib" %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)extern\bin\*.*" "$(SolutionDir)\x64\Release"
+; copy "$(SolutionDir)assets\*.*" "$(SolutionDir)\x64\Release\assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
