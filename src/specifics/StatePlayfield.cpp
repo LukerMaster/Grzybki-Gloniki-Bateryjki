@@ -28,7 +28,7 @@ std::shared_ptr<Object> StatePlayfield::GetObjUnder(sf::Vector2i mouse_pos)
 }
 
 StatePlayfield::StatePlayfield(Vars& vars_, sf::RenderWindow& window_)
-	:State(vars_, window_),
+	:State(vars_, window_, eState::playfield),
 	round_current(0),
 	btn_back(0, sf::Vector2f(30, window.getSize().y - 60), sf::Vector2f(70, 40), "Menu", vars.assets.font, vars.assets.btn_hover, vars.assets.btn_click, ""),
 	playfield(vars.playfield_size),
@@ -167,7 +167,7 @@ void StatePlayfield::Step(float dt)
 
 void StatePlayfield::Draw()
 {
-	window.clear({255, 255, 220, 255});
+	//window.clear({255, 255, 220, 255});
 	window.draw(playfield_bg);
 
 	sf::Sprite bg_decoration;
@@ -217,5 +217,5 @@ void StatePlayfield::Draw()
 		stat_bar.Draw(window);
 	}
 	btn_back.Draw(window);
-	window.display();
+	///window.display();
 }

@@ -41,7 +41,7 @@ StateMenu::StateMenu(Vars& vars_, sf::RenderWindow& window_)
 			}
 		}
 	),
-	State(vars_, window_)
+	State(vars_, window_, eState::menu)
 {
 	game_name.setPosition(40, 20);
 	game_name.setCharacterSize(100);
@@ -162,7 +162,7 @@ void StateMenu::Step(float dt)
 
 void StateMenu::Draw()
 {
-	window.clear(sf::Color::Black);
+	//window.clear(sf::Color::Black);
 	window.draw(menu_sprite);
 
 	// Draw microbes
@@ -186,7 +186,7 @@ void StateMenu::Draw()
 	window.draw(bacteria_amount);
 	window.draw(shrooms_amount);
 	window.draw(game_name);
-	window.display();
+	//window.display();
 }
 
 void StateMenu::LoadMicrobeAssets()

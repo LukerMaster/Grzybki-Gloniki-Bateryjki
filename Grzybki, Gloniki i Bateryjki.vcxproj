@@ -169,6 +169,7 @@
     <ClCompile Include="src\specifics\StatePlayfield.cpp" />
     <ClCompile Include="src\specifics\TransitionAnim.cpp" />
     <ClCompile Include="src\specifics\Vars.cpp" />
+    <ClCompile Include="src\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="src\specifics\StatePlayfield.h" />
     <ClInclude Include="src\specifics\TransitionAnim.h" />
     <ClInclude Include="src\specifics\Vars.h" />
+    <ClInclude Include="src\StateMachine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

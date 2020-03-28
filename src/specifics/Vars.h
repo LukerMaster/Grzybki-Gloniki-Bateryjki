@@ -16,7 +16,7 @@ struct Assets
 	sf::Texture bubble_tex;
 	sf::Texture food_tex;
 	sf::Texture death_icons;
-
+	sf::Texture plank_tex;
 	sf::Texture stat_bar;
 
 	sf::Font font;

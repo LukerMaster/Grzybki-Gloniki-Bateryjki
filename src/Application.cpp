@@ -26,6 +26,9 @@ Application::Application(unsigned int window_height_, unsigned int window_width_
 	vars.assets.btn_hover.loadFromFile("assets/mnsl.mlg");
 	vars.assets.microbe_tex.loadFromFile("assets/mcb.mlg");
 
+	vars.assets.bubble_tex.loadFromFile("assets/bble.mlg");
+	vars.assets.plank_tex.loadFromFile("assets/deska.mlg");
+
 }
 
 void Application::Run()
@@ -37,8 +40,7 @@ void Application::Run()
 
 	sf::Clock dtClock;
 	dtClock.restart();
-	std::map<eState, std::shared_ptr<State>> states;
-	states[eState::menu] = std::make_shared<StateMenu>(vars, window);
+	state_machine.AddState(eState::menu, vars, window);
 
 	while (vars.is_running)
 	{
@@ -65,31 +67,30 @@ void Application::Run()
 		//
 		// Game state update
 		//
+		window.clear({ 0, 0, 0, 255 });
+
+		state_machine.Step(dt, vars.current_state);
+		state_machine.Draw(vars.current_state);
+
 		if (vars.next_state != vars.current_state)
 		{
-			if (vars.next_state == eState::playfield)
-				states[eState::playfield] = std::make_shared<StatePlayfield>(StatePlayfield(vars, window));
-			if (vars.next_state == eState::menu)
-				states[eState::menu] == std::make_shared<StateMenu>(StateMenu(vars, window));
-
-
-			vars.current_state = vars.next_state;
+			if (transition == nullptr)
+			{
+				transition = std::make_unique<TransitionAnim>(TransitionAnim(vars.assets.bubble_tex, vars.assets.plank_tex, 700, window.getSize()));
+				state_machine.AddState(vars.next_state, vars, window);
+			}
 		}
-		else
+		if (transition != nullptr)
 		{
-			if (vars.current_state == eState::menu)
-			{
-				states.find(eState::menu)->second->Step(dt);
-				states.find(eState::menu)->second->Draw();
-			}
-
-			if (vars.current_state == eState::playfield)
-			{
-				states.find(eState::playfield)->second->Step(dt);
-				states.find(eState::playfield)->second->Draw();
-			}
+			transition->Step(dt);
+			transition->Draw(window);
+			if (transition->GetPercentage() > 0.7f)
+				vars.current_state = vars.next_state;
+			if (transition->GetPercentage() > 1.0f)
+				transition = nullptr;
 		}
-		
+
+		window.display();
 
 		//
 		//

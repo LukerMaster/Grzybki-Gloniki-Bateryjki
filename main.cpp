@@ -6,7 +6,7 @@
 int main()
 {
 	srand(time(NULL));
-	Application app(700, 700, 60.0f, false);
+	Application app(900, 900, 60.0f, false);
 	app.Run();
 	return 0;
 }

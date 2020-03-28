@@ -1,10 +1,16 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "specifics/Vars.h"
+#include "StateMachine.h"
+#include "specifics/TransitionAnim.h"
 class Application
 {
 	Vars vars;
 	sf::RenderWindow window;
+	StateMachine state_machine;
+
+	std::unique_ptr<TransitionAnim> transition;
+
 	unsigned int window_width;
 	unsigned int window_height;
 
