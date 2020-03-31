@@ -5,7 +5,7 @@ void Germ::UpdateStats(float dt)
 {
 	if (current_age > max_age)
 	{
-		max_health -= dt * (rand() % 10);
+		current_health -= dt * (rand() % 10) + 5;
 	}
 
 	if (current_health > max_health) current_health = max_health;

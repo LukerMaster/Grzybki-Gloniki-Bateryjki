@@ -9,36 +9,36 @@ StateMenu::StateMenu(Vars& vars_, sf::RenderWindow& window_)
 		{
 			{
 				"exit",
-				Button(0, sf::Vector2f(20, window.getSize().y - 60), { 50, 35 }, "Papa", vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.05f, 0.90f} , { 0.08f, 0.05f }, "Papa", vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"moreAlgae",
-				Button(0, sf::Vector2f(55, window.getSize().y - 240), { 130, 35 }, "Wincyj glonuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.02f, 0.72f}, { 0.17f, 0.05f }, "Wincyj glonuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"lessAlgae",
-				Button(0, sf::Vector2f(65, window.getSize().y - 120), { 120, 35 }, "Mnij glonuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.02f, 0.85f}, { 0.15f, 0.05f }, "Mnij glonuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"moreBacteria",
-				Button(0, sf::Vector2f(200, window.getSize().y - 240), { 160, 35 }, "Wincyj bakteriuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.21f, 0.72f}, { 0.22f, 0.05f }, "Wincyj bakteriuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"lessBacteria",
-				Button(0, sf::Vector2f(210, window.getSize().y - 120), { 150, 35 }, "Mnij bakteriuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.21f, 0.85f}, { 0.19f, 0.05f }, "Mnij bakteriuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"moreShrooms",
-				Button(0, sf::Vector2f(380, window.getSize().y - 240), { 150, 35 }, "Wincyj grzybuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.45f, 0.72f}, { 0.20f, 0.05f }, "Wincyj grzybuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"lessShrooms",
-				Button(0, sf::Vector2f(390, window.getSize().y - 120), { 140, 35 }, "Mnij grzybuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+				Button(window.getSize(), {0.45f, 0.85f}, { 0.17f, 0.05f }, "Mnij grzybuf",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
 			},
 			{
 				"play",
-				Button(0, sf::Vector2f(window.getSize().x - 120, window.getSize().y - 60), { 100, 35 }, "Lecimy!",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
-			}
+				Button(window.getSize(), {0.85f, 0.90f}, { 0.10f, 0.05f }, "Lecimy!",vars.assets.font , vars.assets.btn_hover, vars.assets.btn_click, "")
+			},
 		}
 	),
 	State(vars_, window_, eState::menu)
@@ -96,9 +96,11 @@ StateMenu::StateMenu(Vars& vars_, sf::RenderWindow& window_)
 	buttons.find("lessShrooms")->second.baseColor = { 0, 0, 0, 0 };
 	buttons.find("lessShrooms")->second.hlTextColor = { 255, 102, 102, 225 };
 	buttons.find("lessShrooms")->second.hlColor = { 0, 0, 0, Opacity };
+
 	//
 	// MENU
 	//
+
 	vars.assets.menu_tex.loadFromFile("assets/mnbg.mlg");
 	menu_sprite.setTexture(vars.assets.menu_tex);
 	menu_sprite.setPosition(0, 0);
@@ -110,7 +112,7 @@ void StateMenu::Step(float dt)
 	std::map<const char*, Button>::iterator it = buttons.begin();
 	while (it != buttons.end())
 	{
-		it->second.Update(dt, sf::Mouse::getPosition(window));
+		it->second.Update(dt, sf::Mouse::getPosition(window), window.getSize());
 		it++;
 	}
 
@@ -120,6 +122,7 @@ void StateMenu::Step(float dt)
 	}
 	if (buttons.find("play")->second.CheckAndUnclick())
 	{
+		vars.prev_state = eState::menu;
 		vars.next_state = eState::playfield;
 	}
 	if (buttons.find("moreAlgae")->second.CheckAndUnclick())
@@ -155,6 +158,9 @@ void StateMenu::Step(float dt)
 	algae_amount.setString(std::to_string(vars.num_of_algae));
 	bacteria_amount.setString(std::to_string(vars.num_of_bacteria));
 	shrooms_amount.setString(std::to_string(vars.num_of_shrooms));
+	algae_amount.setPosition(95, window.getSize().y - 200);
+	bacteria_amount.setPosition(275, window.getSize().y - 200);
+	shrooms_amount.setPosition(455, window.getSize().y - 200);
 
 	StepJumpAnimation(dt);
 

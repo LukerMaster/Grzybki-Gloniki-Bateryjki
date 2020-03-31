@@ -33,6 +33,14 @@ bool Button::_IsPointInRect(sf::Vector2i pt, sf::RectangleShape rect)
 }
 
 
+void Button::_Resize()
+{
+	hitBox.setSize({ size.x * window_size.x, size.y * window_size.y });
+	hitBox.setPosition({ pos.x * window_size.x, pos.y * window_size.y });
+	label.setPosition({ pos.x * window_size.x, pos.y * window_size.y });
+	label.setCharacterSize(size.y * window_size.y * 0.8f);
+}
+
 //
 //
 //
@@ -42,21 +50,21 @@ bool Button::_IsPointInRect(sf::Vector2i pt, sf::RectangleShape rect)
 //
 
 
-Button::Button(unsigned int Id, sf::Vector2f pos, sf::Vector2f size, std::string text, sf::Font& font, sf::SoundBuffer& HoverSound, sf::SoundBuffer& ClickSound, std::string description)
-	:funcID(Id)
+Button::Button(sf::Vector2u window_size_, sf::Vector2f pos_, sf::Vector2f size_, std::string text, sf::Font& font, sf::SoundBuffer& HoverSound, sf::SoundBuffer& ClickSound, std::string description)
 {
+	size = size_;
+	pos = pos_;
+	window_size = window_size_;
 	_clicked = false;
 
-	hitBox.setSize(size);
-	hitBox.setPosition(pos);
+	_Resize();
 
 	label.setString(text);
-	label.setPosition(pos);
+	
 	label.setFont(font);
-	label.setCharacterSize(size.y * 0.8f);
+	
 	label.setOutlineColor({ 255, 255, 255, 255 });
 	label.setOutlineThickness(4);
-
 	desc.setString(description);
 
 	SetColors();
@@ -69,8 +77,11 @@ Button::Button(unsigned int Id, sf::Vector2f pos, sf::Vector2f size, std::string
 	clickSound.setBuffer(ClickSound);
 }
 
-void Button::Update(float dt, sf::Vector2i mouse_pos)
+void Button::Update(float dt, sf::Vector2i mouse_pos, sf::Vector2u window_size_)
 {
+	window_size = window_size_;
+	_Resize();
+
 	if (_IsPointInRect(mouse_pos, hitBox))
 	{
 		if (!_prevHovered)

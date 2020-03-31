@@ -68,6 +68,10 @@ void Application::Run()
 		// Game state update
 		//
 		window.clear({ 0, 0, 0, 255 });
+		view.setSize(window.getSize().x, window.getSize().y);
+		view.setCenter(window.getSize().x / 2, window.getSize().y / 2);
+		window.setView(view);
+
 
 		state_machine.Step(dt, vars.current_state);
 		state_machine.Draw(vars.current_state);
@@ -87,7 +91,10 @@ void Application::Run()
 			if (transition->GetPercentage() > 0.7f)
 				vars.current_state = vars.next_state;
 			if (transition->GetPercentage() > 1.0f)
+			{
+				state_machine.DeleteState(vars.prev_state);
 				transition = nullptr;
+			}
 		}
 
 		window.display();

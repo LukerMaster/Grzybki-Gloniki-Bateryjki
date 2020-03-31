@@ -23,6 +23,11 @@ StatBar::StatBar(sf::Font& font_)
 	age_text.setOutlineThickness(4);
 }
 
+void StatBar::SetPosition(sf::Vector2f pos)
+{
+	bar.setPosition(pos.x, pos.y);
+}
+
 void StatBar::Step(float dt)
 {
 	float slowdown = 80.0f;

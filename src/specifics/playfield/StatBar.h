@@ -39,6 +39,8 @@ public:
 
 	StatBar(sf::Font& font_);
 
+	void SetPosition(sf::Vector2f pos);
+
 	void Step(float dt);
 	void Create(sf::Texture& tex, sf::IntRect rect, sf::Vector2u pos, sf::Vector2u origin);
 	void SetStats(sf::Sprite sprite_,

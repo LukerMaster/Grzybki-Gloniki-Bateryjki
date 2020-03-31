@@ -14,7 +14,7 @@ void AIController::AlgaeAI(sf::Vector2i pawn_pos, Playfield& env)
 				env.AddGerm(eObjType::Algae,
 					pawn_pos,
 					spawn_point,
-					pawn->max_age - 10 + (rand() % 21),
+					pawn->max_age - 1 + (rand() % 3),
 					100,
 					100,
 					pawn->current_health / 2,
@@ -26,7 +26,7 @@ void AIController::AlgaeAI(sf::Vector2i pawn_pos, Playfield& env)
 	}
 	else if (pawn->current_food < pawn->max_food) // PHOTOSYNTHESIS
 	{
-		pawn->current_food += 25;
+		pawn->current_food += 35;
 	}
 
 	if (pawn->current_health < pawn->max_health && pawn->current_food > pawn->max_food * 0.5f) // SELF-HEALING
@@ -52,7 +52,7 @@ void AIController::BacteriaAI(sf::Vector2i pawn_pos, Playfield& env)
 			env.AddGerm(eObjType::Bacteria,
 				pawn_pos,
 				spawn_point,
-				pawn->max_age - 10 + (rand() % 21),
+				pawn->max_age - 2 + (rand() % 5),
 				100,
 				100,
 				pawn->current_health / 2,
@@ -61,6 +61,11 @@ void AIController::BacteriaAI(sf::Vector2i pawn_pos, Playfield& env)
 			pawn->current_health /= 2;
 			pawn->current_food /= 2;
 		}
+	}
+	if (pawn->current_health < pawn->max_health && pawn->current_food > pawn->max_food * 0.25f && rand()%4 > 2) // SELF-HEALING
+	{
+		pawn->current_food -= 4;
+		pawn->current_health += 1;
 	}
 	else
 	{
@@ -81,7 +86,6 @@ void AIController::BacteriaAI(sf::Vector2i pawn_pos, Playfield& env)
 				if (env.Move(pawn_pos, new_pos))
 					pawn = env.GetBacteria(new_pos);
 			}
-				
 		}
 		else
 		{
@@ -112,7 +116,11 @@ void AIController::ShroomAI(sf::Vector2i pawn_pos, Playfield& env)
 	std::shared_ptr<Shroom> pawn = env.GetShroom(pawn_pos);
 
 	pawn->AI_done = true;
-
+	if (pawn->current_health < pawn->max_health && pawn->current_food > pawn->max_food * 0.8f && rand() % 4 > 2) // SELF-HEALING
+	{
+		pawn->current_food -= 1;
+		pawn->current_health += 2;
+	}
 	if (pawn->current_food > pawn->max_food * 0.8f && rand() % 2) // DIVISION
 	{
 		sf::Vector2i spawn_point = env.CheckAroundFor(pawn_pos, eObjType::EmptySpace);

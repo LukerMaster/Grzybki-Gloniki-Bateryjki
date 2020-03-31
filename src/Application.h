@@ -7,6 +7,7 @@ class Application
 {
 	Vars vars;
 	sf::RenderWindow window;
+	sf::View view;
 	StateMachine state_machine;
 
 	std::unique_ptr<TransitionAnim> transition;

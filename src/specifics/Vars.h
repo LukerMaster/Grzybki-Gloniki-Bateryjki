@@ -13,6 +13,7 @@ struct Assets
 	sf::Texture spaces_tex;
 	sf::Texture menu_tex;
 	sf::Texture playfield_tex;
+	sf::Texture bg_tile_tex;
 	sf::Texture bubble_tex;
 	sf::Texture food_tex;
 	sf::Texture death_icons;
@@ -40,6 +41,7 @@ struct Vars
 
 	int playfield_size;
 
+	eState prev_state;
 	eState current_state;
 	eState next_state;
 

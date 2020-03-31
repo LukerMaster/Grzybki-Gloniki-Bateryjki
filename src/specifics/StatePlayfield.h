@@ -18,7 +18,12 @@
 //#include <iostream>
 class StatePlayfield : public State
 {
-	sf::Sprite playfield_bg;
+	sf::Sprite tile_sprite;
+	sf::Sprite playfield_sprite;
+
+	unsigned int playfield_size_px;
+	unsigned int playfield_x_offset;
+	unsigned int playfield_y_offset;
 
 	sf::Text sim_step;
 	

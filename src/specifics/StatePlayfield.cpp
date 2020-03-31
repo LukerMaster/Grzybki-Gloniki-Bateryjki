@@ -10,19 +10,19 @@ float StatePlayfield::lerp(float a, float b, float percent)
 template<typename T>
 sf::Vector2f StatePlayfield::GetPositionByGrid(sf::Vector2<T> grid_pos)
 {
-	return { (575 / (float)vars.playfield_size) * grid_pos.x + 57, (575 / (float)vars.playfield_size) * grid_pos.y + 13 };
+	return { (playfield_size_px / (float)vars.playfield_size) * grid_pos.x + playfield_x_offset, (playfield_size_px / (float)vars.playfield_size) * grid_pos.y + playfield_y_offset };
 }
 
 template <typename T>
 sf::Vector2f StatePlayfield::GetScaleByGrid(sf::Vector2<T> rect)
 {
-	return { (575 / (float)vars.playfield_size) / rect.x, (575 / (float)vars.playfield_size) / rect.y };
+	return { (playfield_size_px / (float)vars.playfield_size) / rect.y, (playfield_size_px / (float)vars.playfield_size) / rect.y };
 }
 
 std::shared_ptr<Object> StatePlayfield::GetObjUnder(sf::Vector2i mouse_pos)
 {
-	if (mouse_pos.x > 57 && mouse_pos.x < (575 + 57) && mouse_pos.y > 13 && mouse_pos.y < (575 + 13))
-		return playfield.GetObj(sf::Vector2i( ((mouse_pos.x - 57.0f) / 575.0f) * playfield.GetSize(), ((mouse_pos.y - 13.0f) / 575) * playfield.GetSize() ));
+	if (mouse_pos.x > playfield_x_offset && mouse_pos.x < playfield_x_offset + playfield_size_px && mouse_pos.y > playfield_y_offset && mouse_pos.y < playfield_y_offset + playfield_size_px)
+		return playfield.GetObj(sf::Vector2i( ((mouse_pos.x - playfield_x_offset) / (float)playfield_size_px) * playfield.GetSize(), ((mouse_pos.y - playfield_y_offset) / (float)playfield_size_px) * playfield.GetSize() ));
 	else
 		return nullptr;
 }
@@ -30,12 +30,16 @@ std::shared_ptr<Object> StatePlayfield::GetObjUnder(sf::Vector2i mouse_pos)
 StatePlayfield::StatePlayfield(Vars& vars_, sf::RenderWindow& window_)
 	:State(vars_, window_, eState::playfield),
 	round_current(0),
-	btn_back(0, sf::Vector2f(30, window.getSize().y - 60), sf::Vector2f(70, 40), "Menu", vars.assets.font, vars.assets.btn_hover, vars.assets.btn_click, ""),
+	btn_back(window.getSize(), { 0.03f, 0.90f }, {0.10f, 0.05f}, "Menu", vars.assets.font, vars.assets.btn_hover, vars.assets.btn_click, ""),
 	playfield(vars.playfield_size),
 	animator(playfield.events),
 	curr_sim_step(0),
 	stat_bar(vars.assets.font)
 {
+	playfield_size_px = window.getSize().y * 0.75f;
+	playfield_x_offset = (window.getSize().x / 2) - (playfield_size_px / 2);
+	playfield_y_offset = window.getSize().y * 0.05f;
+	
 	btn_back.baseColor = { 0, 0, 0, 0 };
 	btn_back.hlColor = { 0, 0, 0, 0 };
 	btn_back.baseTextColor = { 0, 0, 80, 255 };
@@ -49,14 +53,17 @@ StatePlayfield::StatePlayfield(Vars& vars_, sf::RenderWindow& window_)
 
 
 	vars.assets.spaces_tex.loadFromFile("assets/spcs.mlg");
-	vars.assets.playfield_tex.loadFromFile("assets/plbg.mlg");
+	vars.assets.playfield_tex.loadFromFile("assets/plfd.mlg");
+	vars.assets.bg_tile_tex.loadFromFile("assets/bgtl.mlg");
+	vars.assets.bg_tile_tex.setRepeated(true);
+
 	vars.assets.food_tex.loadFromFile("assets/fd.mlg");
 	vars.assets.death_icons.loadFromFile("assets/ded.mlg");
 	vars.assets.stat_bar.loadFromFile("assets/bar.mlg");
 
 	stat_bar.Create(vars.assets.stat_bar, sf::IntRect( 0, 0, vars.assets.stat_bar.getSize().x, vars.assets.stat_bar.getSize().y ), window.getSize() , sf::Vector2u(vars.assets.stat_bar.getSize().x, vars.assets.stat_bar.getSize().y));
 
-	playfield_bg.setTexture(vars.assets.playfield_tex);
+	tile_sprite.setTexture(vars.assets.bg_tile_tex);
 
 	int bacteria_to_place = vars.num_of_bacteria;
 	int algae_to_place = vars.num_of_algae;
@@ -70,12 +77,12 @@ StatePlayfield::StatePlayfield(Vars& vars_, sf::RenderWindow& window_)
 	//
 	while (algae_to_place)
 	{
-		if( playfield.AddGermRandom(eObjType::Algae, 20, 100, 100, 100, 100) == true)
+		if( playfield.AddGermRandom(eObjType::Algae, 10, 100, 100, 100, 100) == true)
 			algae_to_place--;
 	}
 	while (bacteria_to_place)
 	{
-		if (playfield.AddGermRandom(eObjType::Bacteria, 100, 100, 100, 100, 100) == true)
+		if (playfield.AddGermRandom(eObjType::Bacteria, 30, 100, 100, 100, 100) == true)
 			bacteria_to_place--;
 	}
 	while (shrooms_to_place)
@@ -128,9 +135,10 @@ void StatePlayfield::Step(float dt)
 
 	stat_bar.Step(dt);
 
-	btn_back.Update(dt, sf::Mouse::getPosition(window));
+	btn_back.Update(dt, sf::Mouse::getPosition(window), window.getSize());
 	if (btn_back.CheckAndUnclick())
 	{
+		vars.prev_state = eState::playfield;
 		vars.next_state = eState::menu;
 	}
 
@@ -163,12 +171,29 @@ void StatePlayfield::Step(float dt)
 	animator.StepAnimations(dt);
 	animator.DeleteDoneAnimations();
 	
+	// If window is resized.
+	playfield_size_px = window.getSize().y * 0.75f;
+	playfield_x_offset = (window.getSize().x / 2) - (playfield_size_px / 2);
+	playfield_y_offset = window.getSize().y * 0.05f;
+
 }
 
 void StatePlayfield::Draw()
 {
-	//window.clear({255, 255, 220, 255});
-	window.draw(playfield_bg);
+	for (int x = 0; x < window.getSize().x; x += tile_sprite.getTexture()->getSize().x)
+	{
+		for (int y = 0; y < window.getSize().y; y += tile_sprite.getTexture()->getSize().y)
+		{
+			tile_sprite.setPosition(x, y);
+			window.draw(tile_sprite);
+		}
+	}
+
+	playfield_sprite.setTexture(vars.assets.playfield_tex);
+	playfield_sprite.setPosition(GetPositionByGrid<int>({ 0, 0 }));
+	playfield_sprite.setScale({ playfield_size_px / (float)(playfield_sprite.getTexture()->getSize().x),
+		playfield_size_px / (float)(playfield_sprite.getTexture()->getSize().y) });
+	window.draw(playfield_sprite);
 
 	sf::Sprite bg_decoration;
 	bg_decoration.setTexture(vars.assets.spaces_tex);
@@ -178,8 +203,8 @@ void StatePlayfield::Draw()
 		for (int y = 0; y < playfield.GetSize(); y++)
 		{
 			bg_decoration.setTextureRect(playfield.GetRekt(x, y));
-			bg_decoration.setPosition((575 / (float)vars.playfield_size) * x + 57, (575 / (float)vars.playfield_size) * y + 13);
-			bg_decoration.setScale((575 / (float)vars.playfield_size) / 64, (575 / (float)vars.playfield_size) / 64);
+			bg_decoration.setPosition(GetPositionByGrid<int>({ x, y }));
+			bg_decoration.setScale(GetScaleByGrid(bg_decoration.getTextureRect().getSize()));
 			window.draw(bg_decoration);
 		}
 	}
@@ -195,7 +220,7 @@ void StatePlayfield::Draw()
 					playfield.GetObj(x, y)->sprite.setTexture(vars.assets.microbe_tex);
 				if (playfield.GetObj(x, y)->type == eObjType::Food)
 					playfield.GetObj(x, y)->sprite.setTexture(vars.assets.food_tex);
-					
+
 				float shown_x = lerp(playfield.GetObj(x, y)->start_pos.x, playfield.GetObj(x, y)->end_pos.x, round_current / anim_length);
 				float shown_y = lerp(playfield.GetObj(x, y)->start_pos.y, playfield.GetObj(x, y)->end_pos.y, round_current / anim_length);
 
@@ -210,12 +235,13 @@ void StatePlayfield::Draw()
 	animator.DrawAnimations(window);
 
 	sim_step.setString("Krok symulacji: " + std::to_string(curr_sim_step));
+	sim_step.setPosition({ 57, window.getSize().y * 0.85f });
 	window.draw(sim_step);
 
+	stat_bar.SetPosition(sf::Vector2f(window.getSize().x, window.getSize().y));
 	if (selected != nullptr)
 	{
 		stat_bar.Draw(window);
 	}
 	btn_back.Draw(window);
-	///window.display();
 }
